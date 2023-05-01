@@ -36,12 +36,12 @@
         },
         {
             "column_name": "order_date",
-            "data_type": "string",
+            "data_type": "timestamp",
             "column_position": 2
         },
         {
             "column_name": "order_customer_id",
-            "data_type": "timestamp",
+            "data_type": "integer",
             "column_position": 3               
         },
         {
@@ -57,13 +57,13 @@
             "column_position": 1
         },
         {
-            "column_name": "product_cateogry_id",
+            "column_name": "product_category_id",
             "data_type": "integer",
             "column_position": 2
         },
         {
             "column_name": "product_name",
-            "data_type": "",
+            "data_type": "string",
             "column_position": 3
         },
         {
