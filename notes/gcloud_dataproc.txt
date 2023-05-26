@@ -1,0 +1,32 @@
+Add static IP address
+
+1) Create or turn on dataproc cluster
+2) Enter to dataproc cluster instance
+3) Go to VM Instance tab
+4) Choose master node instance
+5) In Network interfaces click on View details of master node instance
+6) On the menu at the left, click on Ip Addresses
+7) Attach Static IP Address clicking on Change button and select the master instance. This will assign the static ip address to the master vm instance of the cluster
+
+Connect to gcloud dataproc
+
+1. Configure gcloud connection
+
+1) run `gcloud compute config-ssh`
+2) execute command suggested by gcloud to connect, example: `ssh cluster-3fb9-m.us-central1-f.dataanalytics-347914`
+
+2. Use ssh command from vm instance. This will create a new ssh keys to connect
+
+1) gcloud compute ssh --zone "us-central1-f" "cluster-3fb9-m" --project "dataanalytics-347914"
+2) connect using ssh command `ssh -i ~/.ssh/google_compute_engine mlevydaniel@34.122.45.243`
+
+Important note: In case it appears a warning message remove the existing RSA key from the known_hosts file in ssh folder: https://serverfault.com/questions/321167/add-correct-host-key-in-known-hosts-multiple-ssh-host-keys-per-hostname
+
+Connect using VScode
+
+1) Download "Remote - SSH extension" developed by Microsoft
+2) ssh config file needs to include the cluster instance information. Using `gcloud compute config-ssh` command will do all the configuration automatically
+
+ssh config file stores different ssh configurations to access each key easily. For example, using only `ssh hostname` will connect without any other parameter
+
+3) connect to host and clone repository: https://github.com/Mlevydaniel/data-engineering-on-gcp.git
