@@ -22,11 +22,62 @@ Connect to gcloud dataproc
 
 Important note: In case it appears a warning message remove the existing RSA key from the known_hosts file in ssh folder: https://serverfault.com/questions/321167/add-correct-host-key-in-known-hosts-multiple-ssh-host-keys-per-hostname
 
+Option 1 is preferred because it automatically configures everything to later connect using VSCode. When using the second option, you will have to configure the ssh config file manually
+
 Connect using VScode
 
 1) Download "Remote - SSH extension" developed by Microsoft
 2) ssh config file needs to include the cluster instance information. Using `gcloud compute config-ssh` command will do all the configuration automatically
 
-ssh config file stores different ssh configurations to access each key easily. For example, using only `ssh hostname` will connect without any other parameter
+ssh's config file stores different ssh configurations to access each key easily. For example, using only `ssh hostname` will connect without any other parameter
 
-3) connect to host and clone repository: https://github.com/Mlevydaniel/data-engineering-on-gcp.git
+Clone project
+
+1) connect to host and clone repository: https://github.com/Mlevydaniel/data-engineering-on-gcp.git
+
+Transfer files to HDFS
+
+1. From VM file system to HDFS
+
+1) Create public directory in HDFS: `hdfs dfs -mkdir /public` and check that it was created successfully: `hdfs dfs -ls /`
+2) Copy using `hdfs dfs -put data/retail_db /public` and it will copy recursively
+3) Check using `hdfs dfs -ls -R /public/retail_db`
+
+In case of mistakes, delete using command: `hdfs dfs -rm -R /public/retail_db`
+
+2. From GCS to HDFS
+1) run the command `hdfs dfs -cp gs://airetail_mld/retail_db /public`
+
+Start CLIs
+
+1) pyspark
+2) spark-shell
+3) spark-sql
+
+Copy to gcs
+
+Run command: `gsutil cp -r data/retail_db_json gs://airetail_mld/retail_db_json`
+
+Validate data
+
+We can review each table in GCS from dataproc cluster directly without importing it first into the HDFS!
+
+1) spark-sql
+2) SELECT * FROM JSON.`gs://airetail_mld/retail_db_json/orders` LIMIT 10;
+
+Run spark-sql scripts
+
+1) Execute command: `spark-sql -f ./scripts/daily_product_revenue/file_format_converter.sql -d bucket_name=gs://airetail_mld -d table_name=orders`
+and `spark-sql -f ./scripts/daily_product_revenue/file_format_converter.sql -d bucket_name=gs://airetail_mld -d table_name=order_items`
+
+-f: execute script from file
+-d: argument value in key=value format
+
+spark-sql lets us create databases in GCS and use them as an ordinary database storing all the tables in parquet format. To get the databases and tables use:
+
+`SHOW databases;`
+`USE database;`
+`SHOW tables;`
+`SELECT * FROM database.table LIMIT 100;`
+
+2) Execute final script: `spark-sql -f ./scripts/daily_product_revenue/compute_daily_product_revenue.sql -d bucket_name=gs://airetail_mld`

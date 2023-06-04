@@ -201,10 +201,10 @@ Let us see how to get started with Dataproc Jobs using Spark SQL.
 * Choose Command and enter the following command.
 
 ```
-INSERT OVERWRITE DIRECTORY 'gs://airetail/retail_db_json/daily_status_count'
+INSERT OVERWRITE DIRECTORY 'gs://airetail_mld/retail_db_json/daily_status_count'
 USING JSON
 SELECT order_date, order_status, count(*)
-FROM JSON.`gs://airetail/retail_db_json/orders`
+FROM JSON.`gs://airetail_mld/retail_db_json/orders`
 GROUP BY 1, 2
 ORDER BY 1, 3 DESC
 ```
