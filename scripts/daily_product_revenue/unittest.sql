@@ -4,8 +4,8 @@ USE retail_bronze_db;
 
 SHOW tables;
 
-!gsutil ls gs://airetail/retail_bronze.db/orders;
-!gsutil ls gs://airetail/retail_bronze.db/order_items;
+!gsutil ls gs://airetail_mld/retail_bronze.db/orders;
+!gsutil ls gs://airetail_mld/retail_bronze.db/order_items;
 
 SELECT 'Displaying count for orders';
 SELECT count(*) FROM orders;
@@ -17,7 +17,7 @@ USE retail_gold_db;
 
 SHOW tables;
 
-!gsutil ls gs://airetail/retail_gold.db/daily_product_revenue;
+!gsutil ls gs://airetail_mld/retail_gold.db/daily_product_revenue;
 
 SELECT 'Displaying count for daily_product_revenue';
 SELECT count(*) FROM daily_product_revenue;
