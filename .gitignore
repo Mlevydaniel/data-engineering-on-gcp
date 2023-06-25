@@ -10,3 +10,4 @@ data/retail_db_parquet
 dataanalytics-347914-a4914820562a.json
 application_default_credentials.json
 .DS_Store
+dd-venv
