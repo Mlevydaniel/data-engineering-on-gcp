@@ -11,7 +11,7 @@ from google.cloud import bigquery
 
 client = bigquery.Client()
 QUERY = (
-    'SELECT * FROM `tidy-fort-361710.retail.orders` '
+    'SELECT * FROM `dataanalytics-347914.retail.orders` '
     'LIMIT 10'
 )
 query_job = client.query(QUERY)
@@ -26,13 +26,13 @@ Let us go ahead and validate Google BigQuery Integration with Pyspark. We need t
 * Here is the command used based on the version of Scala using which Spark is developed.
 
 ```shell
-pyspark --jars gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.26.0.jar
+pyspark --jars gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.31.0.jar
 ```
 
 * Here is sample Spark Code to read from BigQuery Table.
 
 ```python
-project_id = 'tidy-fort-361710'
+project_id = 'dataanalytics-347914'
 
 df = spark. \
     read. \
@@ -73,11 +73,11 @@ Now it is time for us to develop the logic to write data in Dataframe to BigQuer
 ```python
 daily_product_revenue = spark. \
     read. \
-    parquet('gs://airetail/retail_gold.db/daily_product_revenue')
+    parquet('gs://airetail_mld/retail_gold.db/daily_product_revenue')
 
 spark.conf.set('temporaryGcsBucket', 'airetail')
 
-project_id = 'tidy-fort-361710'
+project_id = 'dataanalytics-347914'
 
 daily_product_revenue. \
     write. \
@@ -103,10 +103,10 @@ Let us go ahead and create program file with core logic to write data from parqu
 * Export all the relevant variables. Make sure to update values based on your environment.
 
 ```shell
-export DATA_URI='gs://airetail/retail_gold.db/daily_product_revenue'
-export PROJECT_ID='tidy-fort-361710'
+export DATA_URI='gs://airetail_mld/retail_gold.db/daily_product_revenue'
+export PROJECT_ID='dataanalytics-347914'
 export DATASET_NAME='retail'
-export GCS_TEMP_BUCKET='airetail'
+export GCS_TEMP_BUCKET='airetail_mld'
 ```
 
 * Run `spark-submit` to submit the job.
@@ -125,11 +125,11 @@ spark-submit \
     --master yarn \
     --deploy-mode cluster \
     --name "Daily Product Revenue Loader" \
-    --jars gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.26.0.jar \
+    --jars gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.31.0.jar \
     --conf "spark.yarn.appMasterEnv.DATA_URI=gs://airetail/retail_gold.db/daily_product_revenue" \
-    --conf "spark.yarn.appMasterEnv.PROJECT_ID=tidy-fort-361710" \
+    --conf "spark.yarn.appMasterEnv.PROJECT_ID=dataanalytics-347914" \
     --conf "spark.yarn.appMasterEnv.DATASET_NAME=retail" \
-    --conf "spark.yarn.appMasterEnv.GCS_TEMP_BUCKET=airetail" \
+    --conf "spark.yarn.appMasterEnv.GCS_TEMP_BUCKET=airetail_mld" \
     app.py
 ```
 
@@ -146,11 +146,11 @@ spark-submit \
     --master yarn \
     --deploy-mode cluster \
     --name "Daily Product Revenue Loader" \
-    --jars gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.26.0.jar \
+    --jars gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.31.0.jar \
 	--conf "spark.yarn.appMasterEnv.DATA_URI=gs://airetail/retail_gold.db/daily_product_revenue" \
-	--conf "spark.yarn.appMasterEnv.PROJECT_ID=tidy-fort-361710" \
+	--conf "spark.yarn.appMasterEnv.PROJECT_ID=dataanalytics-347914" \
 	--conf "spark.yarn.appMasterEnv.DATASET_NAME=retail" \
-	--conf "spark.yarn.appMasterEnv.GCS_TEMP_BUCKET=airetail" \
+	--conf "spark.yarn.appMasterEnv.GCS_TEMP_BUCKET=airetail_mld" \
 	gs://airetail/apps/daily_product_revenue_bq/app.py
 ```
 
@@ -175,13 +175,13 @@ Let us take care of submitting the application using `gcloud dataproc` command f
 ```shell
 gcloud dataproc jobs submit \
     pyspark --cluster=aidataprocdev \
-    --jars=gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.26.0.jar \
+    --jars=gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.31.0.jar \
 	--properties=spark.app.name="BigQuery Loader - Daily Product Revenue" \
     --properties=spark.submit.deployMode=cluster \
     --properties=spark.yarn.appMasterEnv.DATA_URI=gs://airetail/retail_gold.db/daily_product_revenue \
-    --properties=spark.yarn.appMasterEnv.PROJECT_ID=tidy-fort-361710 \
+    --properties=spark.yarn.appMasterEnv.PROJECT_ID=dataanalytics-347914 \
     --properties=spark.yarn.appMasterEnv.DATASET_NAME=retail \
-    --properties=spark.yarn.appMasterEnv.GCS_TEMP_BUCKET=airetail \
+    --properties=spark.yarn.appMasterEnv.GCS_TEMP_BUCKET=airetail_mld \
     gs://airetail/apps/daily_product_revenue_bq/app.py
 ```
 
