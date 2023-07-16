@@ -17,8 +17,10 @@
 
 #### 2. Use ssh command from vm instance. This will create a new ssh keys to connect
 
-1) gcloud compute ssh --zone "us-central1-f" "cluster-3fb9-m" --project "dataanalytics-347914"
-2) connect using ssh command `ssh -i ~/.ssh/google_compute_engine mlevydaniel@34.122.45.243`
+Two options:
+
+1. gcloud compute ssh --zone "us-central1-f" "cluster-3fb9-m" --project "dataanalytics-347914"
+2. connect using ssh command `ssh -i ~/.ssh/google_compute_engine mlevydaniel@34.122.45.243`
 
 Important note: In case it appears a warning message remove the existing RSA key from the known_hosts file in ssh folder: https://serverfault.com/questions/321167/add-correct-host-key-in-known-hosts-multiple-ssh-host-keys-per-hostname
 
