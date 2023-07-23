@@ -174,15 +174,15 @@ Let us take care of submitting the application using `gcloud dataproc` command f
 
 ```shell
 gcloud dataproc jobs submit \
-    pyspark --cluster=aidataprocdev \
+    pyspark --cluster=cluster-b442 \
     --jars=gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.31.0.jar \
 	--properties=spark.app.name="BigQuery Loader - Daily Product Revenue" \
     --properties=spark.submit.deployMode=cluster \
-    --properties=spark.yarn.appMasterEnv.DATA_URI=gs://airetail/retail_gold.db/daily_product_revenue \
+    --properties=spark.yarn.appMasterEnv.DATA_URI=gs://airetail_mld/retail_gold.db/daily_product_revenue \
     --properties=spark.yarn.appMasterEnv.PROJECT_ID=dataanalytics-347914 \
     --properties=spark.yarn.appMasterEnv.DATASET_NAME=retail \
     --properties=spark.yarn.appMasterEnv.GCS_TEMP_BUCKET=airetail_mld \
-    gs://airetail/apps/daily_product_revenue_bq/app.py
+    gs://airetail_mld/apps/daily_product_revenue_bq/app.py
 ```
 
 ## Spark Data Pipeline using Dataproc Workflow
