@@ -75,7 +75,7 @@ daily_product_revenue = spark. \
     read. \
     parquet('gs://airetail_mld/retail_gold.db/daily_product_revenue')
 
-spark.conf.set('temporaryGcsBucket', 'airetail')
+spark.conf.set('temporaryGcsBucket', 'airetail_mld')
 
 project_id = 'dataanalytics-347914'
 
@@ -126,7 +126,7 @@ spark-submit \
     --deploy-mode cluster \
     --name "Daily Product Revenue Loader" \
     --jars gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.31.0.jar \
-    --conf "spark.yarn.appMasterEnv.DATA_URI=gs://airetail/retail_gold.db/daily_product_revenue" \
+    --conf "spark.yarn.appMasterEnv.DATA_URI=gs://airetail_mld/retail_gold.db/daily_product_revenue" \
     --conf "spark.yarn.appMasterEnv.PROJECT_ID=dataanalytics-347914" \
     --conf "spark.yarn.appMasterEnv.DATASET_NAME=retail" \
     --conf "spark.yarn.appMasterEnv.GCS_TEMP_BUCKET=airetail_mld" \
@@ -137,7 +137,7 @@ spark-submit \
 Make sure to copy the application to GCS so that we can create the job without any issue using Dataproc.
 
 ```
-gsutil cp apps/daily_product_revenue_bq/app.py gs://airetail/apps/daily_product_revenue_bq/app.py
+gsutil cp apps/daily_product_revenue_bq/app.py gs://airetail_mld/apps/daily_product_revenue_bq/app.py
 ```
 * One can validate whether the application can be run from GCS or not by submitting the job using `spark-submit`.
 
@@ -147,17 +147,17 @@ spark-submit \
     --deploy-mode cluster \
     --name "Daily Product Revenue Loader" \
     --jars gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.31.0.jar \
-	--conf "spark.yarn.appMasterEnv.DATA_URI=gs://airetail/retail_gold.db/daily_product_revenue" \
+	--conf "spark.yarn.appMasterEnv.DATA_URI=gs://airetail_mld/retail_gold.db/daily_product_revenue" \
 	--conf "spark.yarn.appMasterEnv.PROJECT_ID=dataanalytics-347914" \
 	--conf "spark.yarn.appMasterEnv.DATASET_NAME=retail" \
 	--conf "spark.yarn.appMasterEnv.GCS_TEMP_BUCKET=airetail_mld" \
-	gs://airetail/apps/daily_product_revenue_bq/app.py
+	gs://airetail_mld/apps/daily_product_revenue_bq/app.py
 ```
 
 ## Deploy and Run Dataproc Spark Job
 Here are the configurations related to Dataproc Spark Job.
 * Job type: **PySpark**
-* Main python file: **gs://airetail/apps/daily_product_revenue_bq/app.py**
+* Main python file: **gs://airetail_mld/apps/daily_product_revenue_bq/app.py**
 * Jar files: **gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.26.0.jar**
 * Properties
 
