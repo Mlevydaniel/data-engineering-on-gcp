@@ -37,7 +37,7 @@ Let us ensure that we install the required dependencies for local development of
 * We need to install following dependencies to develop Airflow DAGs for GCP Services.
 
 ```shell
-pip install apache-airflow==2.3.3
+pip install apache-airflow==2.5.3
 pip install apache-airflow-providers-google
 ```
 

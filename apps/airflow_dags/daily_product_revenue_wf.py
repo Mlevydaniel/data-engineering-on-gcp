@@ -7,7 +7,7 @@ from airflow.providers.google.cloud.operators.dataproc import (
 from airflow.utils.dates import days_ago
 
 # Make sure to update these values as per your environment
-project_id = "tidy-fort-361710"
+project_id = "dataanalytics-347914"
 region = "us-central1"
 
 default_args = {
