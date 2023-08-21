@@ -47,3 +47,19 @@ When killing and then starting a new airflow environment, the same name is used
 `astro dev logs -s`
 
 Check logs continuously (it refreshes): `astro dev logs -s -f`
+
+#### Install a new provider in Virtual Environment
+
+To install a new provider, activate virtual environment and run
+
+`pip install apache-airflow-providers-dbt-cloud`
+
+#### Install a new provider in Astro Airflow
+
+Enter into Providers section in Astro's Github repository, look for the providers name, click on "Use Provider" and add the line into requirements.txt file without the "pip install":
+
+`apache-airflow-providers-dbt-cloud==3.2.2`
+
+Then restart: `astro dev restart`
+
+link to dbt provider page: https://registry.astronomer.io/providers/dbt%20Cloud/versions/latest
